@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Light</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
+
+        body {
+            background-color: skyblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-family: "Bungee Spice", sans-serif;
+        }
+
+        .container {
+            height: 150px;
+            width: 60px;
+            display: flex;
+            border-radius: 30px;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+            background-color: black;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .circle {
+            border: 2px solid black;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background-color: gray;
+            opacity: 0.3;
+        }
+
+        #road-container {
+            position: relative;
+            width: 400px;
+            height: 150px;
+            margin-top: 20px;
+        }
+
+        #road {
+            width: 100%;
+            height: 100%;
+        }
+
+        #car {
+            position: absolute;
+            bottom: 20px; /* car sits on the road */
+            left: 50px;   /* initial position */
+            height: 80px;
+            transition: left 3s linear; /* smooth movement */
+        }
+    </style>
+</head>
+<body>
+    <h1>🚸 Traffic Light 🚦</h1>
+
+    <!-- Traffic Light -->
+    <div class="container">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <!-- Road + Car -->
+    <div id="road-container">
+        <img src="road.png" id="road">
+        <img id="car" src="sport-car.png">
+    </div>
+
+    <script>
+        let circles = document.querySelectorAll('.circle');
+        let car = document.getElementById('car');
+        let carMoved = false;
+        function changeColor() {
+            // Reset all lights
+            circles.forEach(c => c.style.opacity = "0.3");
+
+            // RED light
+            circles[0].style.backgroundColor = "red";
+            circles[0].style.opacity = "1";
+            car.style.left = "50px"; // stop car
+
+            // YELLOW light
+            setTimeout(() => {
+                circles.forEach(c => c.style.opacity = "0.3");
+                circles[1].style.backgroundColor = "yellow";
+                circles[1].style.opacity = "1";
+                
+            }, 5000);
+
+            // GREEN light
+            setTimeout(() => {
+                circles.forEach(c => c.style.opacity = "0.3");
+                circles[2].style.backgroundColor = "green";
+                circles[2].style.opacity = "1";
+
+               if (!carMoved) {
+            car.style.left = "300px";
+            carMoved = true; 
+               }// ensure it doesn't move again
+        } ,8000);
+        }
+
+        changeColor();
+        setInterval(changeColor, 11000); // repeat cycle
+    </script>
+</body>
+</html>
